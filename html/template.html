@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Test task page</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                
+                $('#ajaxform').submit(function(e){
+                    e.preventDefault();
+                    $.ajax({
+                        type: "POST",
+                        url: 'get_new.php',
+                        data: $(this).serialize(),
+                        success: function(response)
+                        {
+                            var jsonData = JSON.parse(response);
+                            console.log(jsonData[1])
+                            $.each(jsonData[1],function(i){
+                                console.log(jsonData[1][i])
+                                console.log(i)
+                                $(`#${i} table`).empty();
+                                $(`#${i} table`).append('<tbody><tr><tr></tbody>');
+                                    $.each(jsonData[1][i], function(ind)
+                                    {
+                                        console.log(jsonData[1][i][ind])
+                                        $(`#${i} tr:last`).append(`<th>${jsonData[1][i][ind]}</th>`);
+                                    });
+                            });
+                            $.each(jsonData[0],function(i){
+                                console.log(i)  
+                                $.each(jsonData[0][i], function(index){
+                                    $(`#${i} tbody`).append('<tr></tr>');
+                                    $.each(jsonData[0][i][index], function(ind)
+                                    {
+                                        $(`#${i} tr:last`).append(`<td>${jsonData[0][i][index][ind]}</td>`);
+                                    });
+                                });
+                            });
+                    }
+                  });
+              });
+            });
+        </script>
+    </head>
+    <body>
+        <div id="stud" class="container pt-5 my-4">
+            <h4>Выборка всех заданий студента</h3>
+            <table class="table table-hover">
+                {% for key in stud_tasks_keys %}
+                <th>{{key}}</th>
+                {% endfor %}
+                {% for item in stud_tasks %}
+                <tr>
+                    {% for data in item %}
+                    <td>{{data}}</td>
+                    {% endfor %}
+                </tr>
+                {% else %}
+                <tr>
+                    <td>No items</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <div id="lecturer" class="container pt-5 my-4">
+            <h4>Выборка для проверяющего</h3>
+            <table class="table table-hover">
+                {% for key in amount_lecturer_keys %}
+                <th>{{key}}</th>
+                {% endfor %}
+                {% for item in amount_lecturer %}
+                <tr>
+                    {% for data in item %}
+                    <td>{{data}}</td>
+                    {% endfor %}
+                </tr>
+                {% else %}
+                <tr>
+                    <td>No items</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <div id="task" class="container pt-5 my-4">
+            <h4>Выборка для задания</h3>
+            <table class="table table-hover">
+                {% for key in task_sg_keys %}
+                <th>{{key}}</th>
+                {% endfor %}
+                {% for item in task_sg %}
+                <tr>
+                    {% for data in item %}
+                    <td>{{data}}</td>
+                    {% endfor %}
+                </tr>
+                {% else %}
+                <tr>
+                    <td>No items</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <div id="class" class="container pt-5 my-4">
+            <h4>Выборка студентов для занятия</h3>
+            <table class="table table-hover">
+                {% for key in class_studs_keys %}
+                <th>{{key}}</th>
+                {% endfor %}
+                {% for item in class_studs %}
+                <tr>
+                    {% for data in item %}
+                    <td>{{data}}</td>
+                    {% endfor %}
+                </tr>
+                {% else %}
+                <tr>
+                    <td>No items</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <div class="container pt-5 my-4">
+            <h4>Рассчёт нагрузки проверяющих</h3>
+                <ul class="list-group">
+                    {% for item in lecturer_load %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                      {{item['Преподаватель']}}
+                      <span class="badge bg-primary rounded-pill">Количество заданий: {{item['Количество заданий']}}</span>
+                    </li>
+                    {% endfor %}
+                </ul>
+        </div>
+        <div class="container pt-5 my-4">
+            <h4>Статистика критически нагруженных заданий</h3>
+                <ul class="list-group">
+                    {% for item in task_load %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                      {{item['Название']}}
+                      <span class="badge bg-primary rounded-pill">Коэффициент загруженности: {{item['Коэффициент загруженности']}}</span>
+                    </li>
+                    {% endfor %}
+                </ul>
+        </div>
+        <div class="container pt-5 my-4">
+            <form id="ajaxform">
+                <div class="row">
+                    <div class="col">
+                        <input type="text" class="form-control" placeholder="ID студента" name="stud">
+                    </div>
+                    <div class="col">
+                        <input type="text" class="form-control" placeholder="ID проверяющего" name="lecturer">
+                    </div>
+                    <div class="col">
+                        <input type="text" class="form-control" placeholder="ID задания" name="task">
+                    </div>
+                    <div class="col">
+                        <input type="text" class="form-control" placeholder="Название занятия" name="class">
+                    </div>
+                    <div class="col">
+                        <button type="submit" class="btn btn-primary">Получить данные</button>
+                    </div>
+                </div>
+            </form>
+          </div>
+          
+    </body>
+</html>
