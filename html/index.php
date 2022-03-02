@@ -1,27 +1,9 @@
 
-<?php require_once '/var/www/twig/vendor/autoload.php'; ?>
-<?php $loader = new Twig_Loader_Filesystem('../html'); ?> 
-<?php $twig = new Twig_Environment($loader); ?> 
-<?php
-function proc_call($procName, $procArg = NULL)
-{
-    $db_login='phpmyadmin';
-    $db_host='localhost';
-    $db_pass='12345'; 
-    $db='TestDB';
-    $conn=mysqli_connect($db_host,$db_login,$db_pass,$db) or die("Не могу подключиться к БД db: " . db_error());
-    mysqli_query($conn, 'SET NAMES "utf8"');
-    
-    $arg = ($procArg == NULL)? '' : $procArg;
-    $query = mysqli_query($conn, "CALL {$procName}({$arg})") or die(mysqli_error($conn));
-    $answer=array(mysqli_fetch_assoc($query));
-    while($ans=mysqli_fetch_assoc($query))
-    {
-        array_push($answer, $ans);
-    }
-    mysqli_close($conn);
-    return $answer;
-}
+<?php require_once '/var/www/twig/vendor/autoload.php';
+$loader = new Twig_Loader_Filesystem('../html'); 
+$twig = new Twig_Environment($loader); 
+require 'lib.php';
+
 $stud_tasks_answer = proc_call('stud_tasks', 1);
 $amount_lecturer_answer = proc_call('amount_of_studs_for_task_of_lecturer', 2);
 $task_sg_answer = proc_call('task_studs_groups', 3);
