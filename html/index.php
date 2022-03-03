@@ -18,7 +18,7 @@ echo $twig->render('template.html', array(
     'task_sg' => $task_sg_answer, 'task_sg_keys' => array_keys($task_sg_answer[0]),
     'class_studs' => $class_studs_answer, 'class_studs_keys' => array_keys($class_studs_answer[0]),
     'lecturer_load' => $lecturer_load_answer, 
-    'task_load' => $task_load_answer)); ?>
+    'task_load' => $task_load_answer)
+); 
 
-
-
+?>

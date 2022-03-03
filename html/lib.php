@@ -11,11 +11,13 @@ function proc_call($procName, $procArg = NULL)
     $arg = ($procArg == NULL)? '' : $procArg;
     $query = mysqli_query($conn, "CALL {$procName}({$arg})") or die(mysqli_error($conn));
     $answer=array(mysqli_fetch_assoc($query));
+    
     while($ans=mysqli_fetch_assoc($query))
     {
         array_push($answer, $ans);
     }
     mysqli_close($conn);
+    
     return $answer;
 }
 ?>
