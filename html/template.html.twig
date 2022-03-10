@@ -20,6 +20,12 @@
                         {
                             var jsonData = JSON.parse(response);
                             console.log(jsonData[1])
+
+                            if (jsonData.indexOf("Ошибка в полe"))
+                            {
+                                alert(jsonData);
+                                return;
+                            }
                             $.each(jsonData[1],function(i){
                                 console.log(jsonData[1][i])
                                 console.log(i)

@@ -1,5 +1,7 @@
 
-<?php require_once '/var/www/twig/vendor/autoload.php';
+<?php 
+// phpinfo();
+require_once '/var/www/twig/vendor/autoload.php';
 $loader = new Twig_Loader_Filesystem('../html'); 
 $twig = new Twig_Environment($loader); 
 require 'lib.php';
@@ -62,7 +64,7 @@ foreach ($lecs_amount as $i => $value)
 }
 
 
-echo $twig->render('template.html', array(
+echo $twig->render('template.html.twig', array(
     'stud_tasks' => $stud_tasks_answer, 'stud_tasks_keys' => array_keys($stud_tasks_answer[0]),
     'amount_lecturer' => $amount_lecturer_answer, 'amount_lecturer_keys' => array_keys($amount_lecturer_answer[0]), 'lec_am' => count($amount_lecturer_answer),
     'task_sg' => $task_sg_answer, 'task_sg_keys' => array_keys($task_sg_answer[0]),
