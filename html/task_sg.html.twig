@@ -1,0 +1,19 @@
+<div id="task" class="container pt-5 my-4">
+    <h3>Выборка для задания</h3>
+    <table class="table table-hover">
+        {% for key in task_sg_keys %}
+        <th>{{key}}</th>
+        {% endfor %}
+        {% for item in task_sg %}
+        <tr>
+            {% for data in item %}
+            <td>{{data}}</td>
+            {% endfor %}
+        </tr>
+        {% else %}
+        <tr>
+            <td>No items</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
