@@ -26,23 +26,6 @@ $stud_tasks_data, $lecturer_load_answer) = get_data();
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // echo '<pre>';
 // print_r($lecturer_data);
 // echo '</pre>';
