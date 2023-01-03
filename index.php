@@ -18,6 +18,31 @@ require 'php/lib.php';
 list($stud_tasks_answer, $amount_lecturer_answer, $task_sg_answer, $class_studs_answer, $lecturer_data, 
 $stud_tasks_data, $lecturer_load_answer) = get_data();
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // echo '<pre>';
 // print_r($lecturer_data);
 // echo '</pre>';
