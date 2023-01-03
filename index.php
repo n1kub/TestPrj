@@ -17,6 +17,9 @@ require 'php/lib.php';
 
 
 
+
+
+
 //Получение данных
 //===============================================================================================
 list($stud_tasks_answer, $amount_lecturer_answer, $task_sg_answer, $class_studs_answer, $lecturer_data, 
